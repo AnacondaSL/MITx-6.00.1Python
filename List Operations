@@ -1,0 +1,59 @@
+L = [2,1,3]
+print(L)
+#[2,1,3]
+L.append(5) #append a element
+L
+#[2,1,3,5]
+#object_name.do_something()
+L1 = [2,1,3]
+L2 = [4,5,6]
+L3 = L1+L2
+#L3 = [2, 1, 3, 4, 5, 6]
+L1.extend([0,6]) #(extend: add a list)
+#[2, 1, 3, 0, 6]
+
+L = [2,1,3,6,3,7,0] # do below in order
+L.remove(2) # L = [1,3,6,3,7,0]
+L.remove(3) # L = [1,6,3,7,0] # Tips: Only Remove the 1st 3
+del(L[1]) # L =  [1,3,7,0]
+# remove element at end of list with L.pop(), returns the removed element
+L.pop() # returns 0 and mutates L = [1,3,7]
+"""
+convert lists to strings and back
+"""
+#list(s),returns a list with every character from s an element in L
+#s
+Out[9]: 'abc'
+
+list(s)
+Out[10]: ['a', 'b', 'c']
+
+#s.split(),to split a string on a character parameter, splits on spaces if called without a parameter
+s ='I <3 cs' # s is a string
+list(s) # returns ['I','','<','3','c','s']
+s.split('<') # returns ['I ','<3 cs']
+L = ['a','b','c'] # L is a list
+''.join(L) # returns 'abc'
+'_'.join(L) #returns 'a_b_c'
+"""
+sort() and sorted()
+reverse()
+"""
+L =[9,6,0,3]
+sorted(L) #returns sorted list, does NOT mutate L
+L.sort() # mutates L = [0,3,6,9]
+L.reverse() #mutates L =[9,6,3,0]
+"""
+Bring together Loops, Functions,range, and lists
+"""
+range is a special procedure returns somethings that behaves like a tuple!
+range(5)# equivalent to tuple[0,1,2,3,4]
+range(2,6)# equivalent to tuple[2,3,4,5]
+range(5,2,-1)# equivalent to tuple[5,4,3]
+# for var in range(5):       # actually computer did:
+      <expression>             for var in (0,1,2,3,4):
+                                    <expression>
+                                    
+https://docs.python.org/3/tutorial/datastructures.html
+
+
