@@ -1,0 +1,35 @@
+"""
+functions as objects
+"""
+def applyToEach(L,f):
+    for i in range(len(L)):  # for every elements in L list
+        L[i] = f(L[i])       # L[0]=function(L[0])
+                             # l[n]=function(L[n])
+          
+L = [1,-2,3.4]
+applyToEach(L,abs)            [1,2,3.4]
+applyToEach(L,int)            [1,2,3]
+applyToEach(L,fact)           [1,2,6]
+applyToEach(L,fib)            [1,2,13] 
+
+def applyToEach(L,x):
+    for f in L:
+        print(f(x))
+applyToEach([abs,int,fact,fib],4)
+4
+4
+24
+5
+"""
+map
+"""
+map(abs,[1,-2,3,4])# map takes a function and map takes a list.It iterately creat a list that it has applied that function to each element in turn.
+for elt in map(abs,[1,-2,3,4]):
+    print(elt)
+
+[1,2,3,4]
+# map gives a structur like a list but u have to walk down,iterate over, to get back out.
+
+
+
+  
