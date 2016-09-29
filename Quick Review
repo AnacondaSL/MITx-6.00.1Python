@@ -1,0 +1,18 @@
+"""
+Strings, tuples, ranges, lists
+"""
+Common operations
+seq[i] # i-th element of sequence
+len(seq)# length of sequence
+seq1+seq2 #concatenation of sequence(not range)
+n*seq # sequence that repeats seq n times(not range)
+seq[start:end] #slice of sequence
+e in seq # True if e contained in sequence
+e not in seq # True if e not contained in sequence
+for e in seq # iterates over elements of sequence
+
+Type     Type of elements   Examples of literals   Mutable
+str      characters         '','a','abc'            No
+tuple    any type           (),(3),('abc',4)        No
+range    integers           range(10),range(1,10,2) No
+list     any type           [],[3],['abc',4]        Yes
