@@ -1,3 +1,45 @@
 """
 Dictionaries
 """
+A python dictionary
+# store pairs of data
+key and value
+key1       Val1
+key2       Val2
+key3       Val3
+...        ...
+custom     element
+index by
+label
+
+my_dict = {} # empty dictonary
+grades = {'Ana':'B','John':'A+','Denise':'A','Katy':'A'}
+
+# no need to reply on the order, but key to value
+
+[in] grades['Jone']
+[Out] 'A+'
+
+grades['Sylvan'] = 'A'
+# add 'Sylan':'A' in the dictionary:grades
+
+del(grades['Ana'])
+#delet Ana from dictionary
+
+[In] grades.keys()
+[Out]dict_keys(['Sylvan','Katy','Denise','John'])
+# get an iterable that acts like a tuple of all keys
+[In]grades.values()
+[Out]dict_values(['A','A','A+','B'])
+# get an interable that acts like a tuple of all values
+
+# values can be any type(immutable and mutable)
+can be duplicates
+dictionary values can be lists, even other dictionaries
+
+keys
+must be unique
+immutable type(int,float,string,tuple,bool)
+
+
+
