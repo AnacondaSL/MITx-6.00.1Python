@@ -41,5 +41,13 @@ keys
 must be unique
 immutable type(int,float,string,tuple,bool)
 
+List                 VS                dictionary
+ordered sequence of elements           match 'key' to 'value'
+look up elements by an integer index   look up one term(value) by another term(key)
+indices have an order                  No order is guaranteed 
+index is an integer                    key can be any immutable type
+
+
+
 
 
