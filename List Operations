@@ -184,3 +184,16 @@ Python包含以下方法:
 反向列表中元素
 9	list.sort([func])
 对原列表进行排序
+
+以下实例展示了 pop()函数的使用方法：
+#!/usr/bin/python
+
+aList = [123, 'xyz', 'zara', 'abc'];
+
+print "A List : ", aList.pop();
+print "B List : ", aList.pop(2);
+以上实例输出结果如下：
+A List :  abc
+B List :  zara 从末尾数第二个
+
+
