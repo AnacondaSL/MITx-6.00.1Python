@@ -1,0 +1,261 @@
+Week 5: Object Oriented Programming > 10. An Extended Example
+
+Exercise: hand
+5.0/5.0 points (graded)
+ESTIMATED TIME TO COMPLETE: 14 minutes
+
+In this problem, you'll be asked to read through an object-oriented implementation of the hand from the word game problem of Problem Set 4. You'll then be asked to implement one of its methods. Note that the implementation of the object-oriented version of the hand is a bit different than how we did things with the functional implementation; pay close attention to doc strings and read through the implementation carefully.
+
+To begin: Download hand.py and read through the file. Be sure to understand what's going on in the file. Make a few instances of the Hand class, and play around with the existing methods.
+
+When you have completed reading through the file, implement the update method.
+
+Paste the entire Hand class in the box below.
+
+The __str__ method is this:
+
+    def __str__(self):
+        '''
+        Display a string representation of the hand.
+        '''
+        output = ''
+        hand_keys = self.hand.keys()
+        hand_keys.sort()
+        for letter in hand_keys:
+            for j in range(self.hand[letter]):
+                output += letter
+        return output
+A more concise version of this code might be
+
+    def __str__(self):
+        '''
+        Display a string representation of the hand.
+        '''
+        output = ''
+        for letter in sorted(self.hand.keys()):
+            output += letter * self.hand[letter]
+        return output
+Use whichever __str__ method you like. This will make sure the grading of the hand's display is consistent.
+
+import random 
+
+class Hand(object):
+    def __init__(self, n):
+        '''
+        Initialize a Hand.
+
+        n: integer, the size of the hand.
+        '''
+        assert type(n) == int
+        self.HAND_SIZE = n
+        self.VOWELS = 'aeiou'
+        self.CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
+
+        # Deal a new hand
+        self.dealNewHand()
+
+    def dealNewHand(self):
+        '''
+        Deals a new hand, and sets the hand attribute to the new hand.
+        '''
+        # Set self.hand to a new, empty dictionary
+        self.hand = {}
+
+        # Build the hand
+        numVowels = self.HAND_SIZE // 3
+    
+        for i in range(numVowels):
+            x = self.VOWELS[random.randrange(0,len(self.VOWELS))]
+            self.hand[x] = self.hand.get(x, 0) + 1
+        
+        for i in range(numVowels, self.HAND_SIZE):    
+            x = self.CONSONANTS[random.randrange(0,len(self.CONSONANTS))]
+            self.hand[x] = self.hand.get(x, 0) + 1
+            
+    def setDummyHand(self, handString):
+        '''
+        Allows you to set a dummy hand. Useful for testing your implementation.
+
+        handString: A string of letters you wish to be in the hand. Length of this
+        string must be equal to self.HAND_SIZE.
+
+        This method converts sets the hand attribute to a dictionary
+        containing the letters of handString.
+        '''
+        assert len(handString) == self.HAND_SIZE, "Length of handString ({0}) must equal length of HAND_SIZE ({1})".format(len(handString), self.HAND_SIZE)
+        self.hand = {}
+        for char in handString:
+            self.hand[char] = self.hand.get(char, 0) + 1
+
+
+    def calculateLen(self):
+        '''
+        Calculate the length of the hand.
+        '''
+        ans = 0
+        for k in self.hand:
+            ans += self.hand[k]
+        return ans
+    
+    def __str__(self):
+        '''
+        Display a string representation of the hand.
+        '''
+        output = ''
+        hand_keys = sorted(self.hand.keys())
+        for letter in hand_keys:
+            for j in range(self.hand[letter]):
+                output += letter
+        return output
+
+    def update(self, word):
+        """
+        Does not assume that self.hand has all the letters in word.
+
+        Updates the hand: if self.hand does have all the letters to make
+        the word, modifies self.hand by using up the letters in the given word.
+
+        Returns True if the word was able to be made with the letter in
+        the hand; False otherwise.
+        
+        word: string
+        returns: Boolean (if the word was or was not made)
+        """
+        new_hand = self.hand.copy()
+        for letter in word:
+            try:
+                new_hand[letter] -= 1
+            except KeyError:
+                # if 'letter' isn't in the hand, we can't make the word from this hand.
+                return False
+        for letter in new_hand.keys():
+            # If any of the letter counts of the new hand are less than zero after the
+            # update, then we can't make the word from this hand.
+            if new_hand[letter] < 0:
+                return False
+        # If we've gotten to here, we must be able to make the word from this hand.
+        # Set self.hand to the new, updated hand and return True.
+        self.hand = new_hand
+        return True 
+        
+        
+Exercise: genPrimes
+5.0/5.0 points (graded)
+ESTIMATED TIME TO COMPLETE: 10 minutes
+
+Write a generator, genPrimes, that returns the sequence of prime numbers on successive calls to its next() method: 2, 3, 5, 7, 11, ...
+
+Hints
+Ideas about the problem
+Have the generator keep a list of the primes it's generated. A candidate number x is prime if (x % p) != 0 for all earlier primes p.
+
+def genPrimes():
+    primes = []   
+    last = 1      
+    while True:
+        last += 1
+        for p in primes:
+            if last % p == 0:
+                break
+        else:
+            primes.append(last)
+            yield last
+
+p = genPrimes()
+
+Problem 1 - Build the Shift Dictionary and Apply Shift
+10.0/20.0 points (graded)
+The Message class contains methods that could be used to apply a cipher to a string, either to encrypt or to decrypt a message (since for Caesar codes this is the same action).
+
+In the next two questions, you will fill in the methods of the Message class found in ps6.py according to the specifications in the docstrings. The methods in the Message class already filled in are:
+
+__init__(self, text)
+The getter method get_message_text(self)
+The getter method get_valid_words(self), notice that this one returns a copy of self.valid_words to prevent someone from mutating the original list.
+In this problem, you will fill in two methods:
+
+Fill in the build_shift_dict(self, shift) method of the Message class. Be sure that your dictionary includes both lower and upper case letters, but that the shifted character for a lower case letter and its uppercase version are lower and upper case instances of the same letter. What this means is that if the original letter is "a" and its shifted value is "c", the letter "A" should shift to the letter "C".
+
+If you are unfamiliar with the ordering or characters of the English alphabet, we will be following the letter ordering displayed by string.ascii_lowercase and string.ascii_uppercase:
+
+>>> import string
+>>> print(string.ascii_lowercase)
+abcdefghijklmnopqrstuvwxyz
+>>> print(string.ascii_uppercase)
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+A reminder from the introduction page - characters such as the space character, commas, periods, exclamation points, etc will not be encrypted by this cipher - basically, all the characters within string.punctuation, plus the space (' ') and all numerical characters (0 - 9) found in string.digits.
+
+Fill in the apply_shift(self, shift) method of the Message class. You may find it easier to use build_shift_dict(self, shift). Remember that spaces and punctuation should not be changed by the cipher.
+
+Paste your implementation of the Message class in the box below.
+
+class Message (object): 
+    def __init__(self, text):
+        '''
+        Initializes a Message object
+        text (string): the message's text
+
+        a Message object has two attributes:
+            self.message_text (string, determined by input text)
+            self.valid_words (list, determined using helper function load_words
+        '''
+
+        self.message_text = text
+        self.valid_words = load_words(WORDLIST_FILENAME)
+
+    def build_shift_dict(self, shift):
+        dict = {}
+        stringLower = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'
+        stringUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        pos1 = 0
+
+        for letter in stringLower[0:26]:
+            offset1 = pos1 + shift
+            dict[letter] = stringLower[offset1]
+            pos1 += 1
+
+        pos2 = 0
+
+        for letter in stringUpper[0:26]:
+            offset2 = pos2 + shift
+            dict[letter] = stringUpper[offset2]
+            pos2 += 1
+        return dict
+
+    def punct_handler(self,text, dict):
+
+        stringLower = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'
+        stringUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        temp = []
+        s = 0
+        t = 1
+
+        while t <= len(text):
+            if text[s:t] in '12!@#$%;:, <>^&*.?/\0123456789':
+                temp.append(text[s:t])
+            else:
+                val = text[s:t]
+                temp.append(coder[val])
+            s += 1
+            t += 1
+
+        return ''.join(temp)
+
+    def apply_shift(self,text, shift):
+        return punct_handler(text, build_shift_dict(shift))
+        
+Problem 2 - PlaintextMessage
+0.0/15.0 points (graded)
+For this problem, the graders will use our implementation of the Message class, so don't worry if you did not get the previous parts correct.
+
+PlaintextMessage is a subclass of Message and has methods to encode a string using a specified shift value. Our class will always create an encoded version of the message, and will have methods for changing the encoding.
+
+Implement the methods in the class PlaintextMessage according to the specifications in ps6.py. The methods you should fill in are:
+
+__init__(self, text, shift): Use the parent class constructor to make your code more concise.
+The getter method get_shift(self)
+The getter method get_encrypting_dict(self): This should return a COPY of self.encrypting_dict to prevent someone from mutating the original dictionary.
+The getter method get_message_text_encrypted(self)
+change_shift(self, shift): Think about what other methods you can use to make this easier. It shouldn’t take more than a couple lines of code.
+Paste your implementation of the entire PlaintextMessage class in the box below.
+
