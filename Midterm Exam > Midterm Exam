@@ -1,0 +1,133 @@
+Midterm Exam > Midterm Exam 
+
+Problem 7
+20.0/20.0 points (graded)
+Assume you are given two dictionaries d1 and d2, each with integer keys and integer values. You are also given a function f, that takes in two integers, performs an unknown operation on them, and returns a value.
+
+Write a function called dict_interdiff that takes in two dictionaries (d1 and d2). The function will return a tuple of two dictionaries: a dictionary of the intersect of d1 and d2 and a dictionary of the difference of d1 and d2, calculated as follows:
+
+intersect: The keys to the intersect dictionary are keys that are common in both d1 and d2. To get the values of the intersect dictionary, look at the common keys in d1 and d2 and apply the function f to these keys' values -- the value of the common key in d1 is the first parameter to the function and the value of the common key in d2 is the second parameter to the function. Do not implement f inside your dict_interdiff code -- assume it is defined outside.
+difference: a key-value pair in the difference dictionary is (a) every key-value pair in d1 whose key appears only in d1 and not in d2 or (b) every key-value pair in d2 whose key appears only in d2 and not in d1.
+Here are two examples:
+
+If f(a, b) returns a + b
+d1 = {1:30, 2:20, 3:30, 5:80}
+d2 = {1:40, 2:50, 3:60, 4:70, 6:90}
+then dict_interdiff(d1, d2) returns ({1: 70, 2: 70, 3: 90}, {4: 70, 5: 80, 6: 90})
+If f(a, b) returns a > b
+d1 = {1:30, 2:20, 3:30}
+d2 = {1:40, 2:50, 3:60}
+then dict_interdiff(d1, d2) returns ({1: False, 2: False, 3: False}, {})
+def dict_interdiff(d1, d2):
+    '''
+    d1, d2: dicts whose keys and values are integers
+    Returns a tuple of dictionaries according to the instructions above
+    '''
+    # Your code here
+Paste your entire function, including the definition, in the box below. The function f will be automatically added to your code, do not paste it in the box. Do not leave any debugging print statements. Note that we ask you to write a function only -- you cannot rely on any variables defined outside your function for your code to work correctly.
+
+def dict_interdiff(d1, d2):
+    '''
+    d1, d2: dicts whose keys and values are integers
+    Returns a tuple of dictionaries according to the instructions above
+    '''
+    #intersect:look at the common keys in d1 and d2 and apply the function f to these keys' values
+    intersect = {}
+    difference = {}
+    for key in d1:
+        if key in d2:
+            difference[key] = f(d1[key],d2[key])
+    #difference: a key-value pair in the difference dictionary is (a) every key-value pair in d1 whose key 
+    #appears only in d1 and not in d2 or (b) every key-value pair in d2 whose key appears only in d2 and not in d1.
+        else:
+            intersect[key] = d1[key]
+    for key in d2:
+        if key not in d1:
+           intersect[key] = d2[key] 
+    tuple_interdiff = (difference, intersect)
+    return tuple_interdiff
+    
+    Problem 8
+20.0 points possible (graded)
+Implement a function that meets the specifications below.
+
+def applyF_filterG(L, f, g):
+    """
+    Assumes L is a list of integers
+    Assume functions f and g are defined for you. 
+    f takes in an integer, applies a function, returns another integer 
+    g takes in an integer, applies a Boolean function, 
+        returns either True or False
+    Mutates L such that, for each element i originally in L, L contains  
+        i if g(f(i)) returns True, and no other elements
+    Returns the largest element in the mutated L or -1 if the list is empty
+    """
+    # Your code here
+For example, the following functions, f, g, and test code:
+
+def f(i):
+    return i + 2
+def g(i):
+    return i > 5
+
+L = [0, -10, 5, 6, -4]
+print(applyF_filterG(L, f, g))
+print(L)
+Should print:
+
+6
+[5, 6]
+For this question, you will not be able to see the test cases we run. This problem will test your ability to come up with your own test cases.
+
+def applyF_filterG(L, f, g):
+    """
+    Assumes L is a list of integers
+    Assume functions f and g are defined for you. 
+    f takes in an integer, applies a function, returns another integer 
+    g takes in an integer, applies a Boolean function, 
+        returns either True or False
+    Mutates L such that, for each element i originally in L, L contains  
+        i if g(f(i)) returns True, and no other elements
+    Returns the largest element in the mutated L or -1 if the list is empty
+    """
+    L_copy = L[:]
+    for i in L_copy:
+        if not g(f(i)):
+            L.remove(i)
+    if len(L)==0:
+        return -1
+    else:
+        return  max(L)
+        
+       
+Problem 9
+15.0/15.0 points (graded)
+Write a function to flatten a list. The list contains other lists, strings, or ints. For example, [[1,'a',['cat'],2],[[[3]],'dog'],4,5] is flattened into [1,'a','cat',2,3,'dog',4,5] (order matters).
+
+def flatten(aList):
+    ''' 
+    aList: a list 
+    Returns a copy of aList, which is a flattened version of aList 
+    '''
+  
+
+Click to expand Hint: How to think about this problem
+Recursion is extremely useful for this question. You will have to try to flatten every element of the original list. To check whether an element can be flattened, the element must be another object of type list.
+
+Paste your entire function, including the definition, in the box below. Do not leave any debugging print statements. Note that we ask you to write a function only -- you cannot rely on any variables defined outside your function for your code to work correctly.
+
+def flatten(aList):
+    ''' 
+    aList: a list 
+    Returns a copy of aList, which is a flattened version of aList 
+    '''
+    flattened_list = [];
+    
+    for i in range(len(aList)):
+        if isinstance(aList[i],list):
+            flattened_list.extend(flatten(aList[i]));
+        else:
+            flattened_list.append(aList[i]);
+    return flattened_list;
+    
+    
